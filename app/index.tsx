@@ -27,7 +27,7 @@ export default function WelcomeScreen() {
       {/* Brand area */}
       <View style={styles.brandArea}>
         <View style={styles.iconCircle}>
-          <Ionicons name={'leaf' as any} size={42} color={palette.primary} />
+          <Ionicons name={'leaf' as any} size={32} color={palette.primary} />
         </View>
         <Text style={styles.brandName}>Tend</Text>
         <Text style={styles.tagline}>
@@ -104,20 +104,20 @@ export default function WelcomeScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingTop: 80,
+    paddingTop: 48,
   },
   brandArea: {
     alignItems: 'center',
-    marginBottom: 40,
+    marginBottom: 24,
   },
   iconCircle: {
-    width: 80,
-    height: 80,
-    borderRadius: 40,
+    width: 60,
+    height: 60,
+    borderRadius: 30,
     backgroundColor: palette.white,
     alignItems: 'center',
     justifyContent: 'center',
-    marginBottom: 16,
+    marginBottom: 10,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.15,
@@ -125,17 +125,17 @@ const styles = StyleSheet.create({
     elevation: 8,
   },
   brandName: {
-    fontSize: 48,
+    fontSize: 36,
     fontWeight: '800',
     color: palette.white,
     letterSpacing: -1,
   },
   tagline: {
-    fontSize: 18,
+    fontSize: 16,
     color: 'rgba(255,255,255,0.9)',
     textAlign: 'center',
-    marginTop: 8,
-    lineHeight: 26,
+    marginTop: 6,
+    lineHeight: 22,
     fontWeight: '500',
   },
   cardsArea: {
