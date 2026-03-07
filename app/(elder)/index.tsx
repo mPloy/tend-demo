@@ -11,9 +11,10 @@ import {
 import { Ionicons } from '@expo/vector-icons';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { palette, theme, serviceConfig } from '../../constants/Colors';
-import { helpers } from '../../constants/MockData';
+import { helpers, careBundles } from '../../constants/MockData';
 import SearchBar from '../../components/SearchBar';
 import HelperProfileCard from '../../components/HelperProfileCard';
+import CareBundleCard from '../../components/CareBundleCard';
 import type { ServiceType } from '../../types';
 
 const allServices: { key: 'all' | ServiceType; label: string; icon: string }[] = [
@@ -133,6 +134,23 @@ export default function ExploreScreen() {
             );
           })}
         </ScrollView>
+
+        {/* Care Bundles */}
+        <View style={styles.bundlesSection}>
+          <Text style={styles.bundlesTitle}>Care Bundles</Text>
+          <Text style={styles.bundlesSubtitle}>Save with weekly packages</Text>
+          <ScrollView
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            contentContainerStyle={styles.bundlesRow}
+          >
+            {careBundles.map((bundle) => (
+              <View key={bundle.id} style={{ width: 260 }}>
+                <CareBundleCard bundle={bundle} onPress={() => {}} />
+              </View>
+            ))}
+          </ScrollView>
+        </View>
 
         {/* Section header */}
         <View style={styles.sectionHeader}>
@@ -318,6 +336,26 @@ const styles = StyleSheet.create({
   },
   sortLabelActive: {
     color: palette.primary,
+  },
+  bundlesSection: {
+    paddingTop: 8,
+    marginBottom: 8,
+  },
+  bundlesTitle: {
+    fontSize: 20,
+    fontWeight: '700',
+    color: palette.textPrimary,
+    paddingHorizontal: 20,
+  },
+  bundlesSubtitle: {
+    fontSize: 13,
+    color: palette.textTertiary,
+    paddingHorizontal: 20,
+    marginBottom: 12,
+  },
+  bundlesRow: {
+    paddingHorizontal: 16,
+    gap: 12,
   },
   emptyState: {
     alignItems: 'center',

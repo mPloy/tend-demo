@@ -86,6 +86,33 @@ export default function WelcomeScreen() {
             color={palette.warmGray400}
           />
         </TouchableOpacity>
+
+        <TouchableOpacity
+          style={styles.roleCard}
+          activeOpacity={0.85}
+          onPress={() => router.push('/(family)')}
+        >
+          <View
+            style={[styles.roleIconCircle, { backgroundColor: '#EEF2FF' }]}
+          >
+            <Ionicons
+              name={'people' as any}
+              size={28}
+              color="#4F46E5"
+            />
+          </View>
+          <View style={styles.roleCardContent}>
+            <Text style={styles.roleTitle}>I'm a family member</Text>
+            <Text style={styles.roleSubtitle}>
+              Monitor care for your loved one remotely
+            </Text>
+          </View>
+          <Ionicons
+            name={'chevron-forward' as any}
+            size={22}
+            color={palette.warmGray400}
+          />
+        </TouchableOpacity>
       </View>
 
       {/* Footer */}

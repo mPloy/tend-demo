@@ -23,6 +23,7 @@ export default function LoginScreen() {
 
   const handleDemoElder = () => router.replace('/(elder)');
   const handleDemoHelper = () => router.replace('/(helper)');
+  const handleDemoFamily = () => router.replace('/(family)');
 
   return (
     <KeyboardAvoidingView
@@ -140,6 +141,16 @@ export default function LoginScreen() {
             <Text style={styles.demoCardSub}>Sarah Williams</Text>
           </TouchableOpacity>
         </View>
+
+        <TouchableOpacity
+          style={[styles.demoCard, { marginHorizontal: 0, marginBottom: 24 }]}
+          onPress={handleDemoFamily}
+          activeOpacity={0.7}
+        >
+          <Ionicons name={'people' as any} size={22} color="#4F46E5" />
+          <Text style={styles.demoCardText}>Demo as Family</Text>
+          <Text style={styles.demoCardSub}>Jennifer Chen</Text>
+        </TouchableOpacity>
 
         {/* Sign up */}
         <View style={styles.signUpRow}>

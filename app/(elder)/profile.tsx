@@ -11,9 +11,11 @@ import { Ionicons } from '@expo/vector-icons';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useRouter } from 'expo-router';
 import { palette, theme } from '../../constants/Colors';
-import { currentElder } from '../../constants/MockData';
+import { currentElder, regularHelpers, recurringSchedules } from '../../constants/MockData';
 import { serviceConfig } from '../../constants/Colors';
 import RatingStars from '../../components/RatingStars';
+import RegularHelperCard from '../../components/RegularHelperCard';
+import RecurringScheduleCard from '../../components/RecurringScheduleCard';
 
 export default function ElderProfileScreen() {
   const insets = useSafeAreaInsets();
@@ -105,6 +107,22 @@ export default function ElderProfileScreen() {
               );
             })}
           </View>
+        </View>
+
+        {/* Your Regular Helpers */}
+        <View style={styles.section}>
+          <Text style={styles.sectionTitle}>Your Regular Helpers</Text>
+          {regularHelpers.map((rh) => (
+            <RegularHelperCard key={rh.helperId} regular={rh} onPress={() => {}} />
+          ))}
+        </View>
+
+        {/* Recurring Schedule */}
+        <View style={styles.section}>
+          <Text style={styles.sectionTitle}>Recurring Schedule</Text>
+          {recurringSchedules.map((rs) => (
+            <RecurringScheduleCard key={rs.id} schedule={rs} />
+          ))}
         </View>
 
         {/* Menu */}

@@ -51,6 +51,7 @@ export default function RootLayout() {
         />
         <Stack.Screen name="(elder)" options={{ headerShown: false }} />
         <Stack.Screen name="(helper)" options={{ headerShown: false }} />
+        <Stack.Screen name="(family)" options={{ headerShown: false }} />
       </Stack>
     </>
   );

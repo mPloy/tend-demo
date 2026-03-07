@@ -54,6 +54,24 @@ export const palette = {
   // Shadows
   shadowColor: '#000000',
 
+  // Alert severity
+  alertInfo: '#3B82F6',
+  alertInfoLight: '#DBEAFE',
+  alertWarning: '#F59E0B',
+  alertWarningLight: '#FEF3C7',
+  alertUrgent: '#EF4444',
+  alertUrgentLight: '#FEE2E2',
+
+  // Mood colors
+  moodGreat: '#00B47C',
+  moodGood: '#3B82F6',
+  moodOkay: '#F59E0B',
+  moodLow: '#EF4444',
+
+  // Family accent
+  familyPurple: '#6C5CE7',
+  familyPurpleLight: '#F0F0FF',
+
   // Misc
   star: '#F59E0B',
   verified: '#00B47C',

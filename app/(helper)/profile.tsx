@@ -16,6 +16,9 @@ import { currentHelper, reviews } from '../../constants/MockData';
 import RatingStars from '../../components/RatingStars';
 import TrustBadge from '../../components/TrustBadge';
 import ReviewCard from '../../components/ReviewCard';
+import EnhancedTrustBadge from '../../components/EnhancedTrustBadge';
+import QualityScoreCard from '../../components/QualityScoreCard';
+import TransportSafetyCard from '../../components/TransportSafetyCard';
 
 export default function HelperProfileScreen() {
   const insets = useSafeAreaInsets();
@@ -72,19 +75,39 @@ export default function HelperProfileScreen() {
           </Text>
         </LinearGradient>
 
-        {/* Verification badges */}
-        <View style={styles.badgesSection}>
-          {helper.idVerified && <TrustBadge type="id_verified" />}
-          {helper.backgroundChecked && (
-            <TrustBadge type="background_checked" />
-          )}
-          {helper.referencesVerified > 0 && (
-            <TrustBadge
-              type="references"
-              count={helper.referencesVerified}
-            />
-          )}
-        </View>
+        {/* Enhanced Verification Audit Trail */}
+        {helper.verificationRecords && helper.verificationRecords.length > 0 ? (
+          <View style={styles.badgesSection}>
+            <EnhancedTrustBadge records={helper.verificationRecords} />
+          </View>
+        ) : (
+          <View style={styles.badgesSection}>
+            {helper.idVerified && <TrustBadge type="id_verified" />}
+            {helper.backgroundChecked && (
+              <TrustBadge type="background_checked" />
+            )}
+            {helper.referencesVerified > 0 && (
+              <TrustBadge
+                type="references"
+                count={helper.referencesVerified}
+              />
+            )}
+          </View>
+        )}
+
+        {/* Human QA Score */}
+        {helper.qualityScore && (
+          <View style={{ paddingHorizontal: 20, marginBottom: 8 }}>
+            <QualityScoreCard score={helper.qualityScore} />
+          </View>
+        )}
+
+        {/* Transport Safety */}
+        {helper.transportSafety && (
+          <View style={{ paddingHorizontal: 20, marginBottom: 8 }}>
+            <TransportSafetyCard safety={helper.transportSafety} />
+          </View>
+        )}
 
         {/* Stats row */}
         <View style={styles.statsRow}>

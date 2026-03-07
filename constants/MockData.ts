@@ -6,6 +6,14 @@ import type {
   Review,
   MessageThread,
   ServiceType,
+  FamilyMember,
+  VisitNote,
+  FamilyAlert,
+  CareTeamMember,
+  RecurringSchedule,
+  RegularHelper,
+  CareBundle,
+  TripLog,
 } from '../types';
 
 // ─── Service Labels ─────────────────────────────────────────────────────────
@@ -496,3 +504,483 @@ export const messageThreads: MessageThread[] = [
 // ─── Current user references (for demo mode) ───────────────────────────────
 export const currentElder = elders[0]; // Margaret Chen
 export const currentHelper = helpers[0]; // Sarah Williams
+
+// ─── Trust Stack Data ────────────────────────────────────────────────────────
+
+// Helper 0 — Sarah Williams (premium, hasCar)
+helpers[0].verificationRecords = [
+  { type: 'id_drivers_license', status: 'cleared', verifiedDate: '2024-10-15', description: 'BC Driver\u2019s License verified', issuingAuthority: 'ICBC' },
+  { type: 'criminal_record_check', status: 'cleared', verifiedDate: '2024-10-20', expiryDate: '2027-10-20', description: 'Criminal Record Check — clear', issuingAuthority: 'RCMP' },
+  { type: 'criminal_record_review', status: 'cleared', verifiedDate: '2024-10-22', expiryDate: '2029-10-22', description: 'BC Criminal Records Review Program — cleared for work with vulnerable adults', issuingAuthority: 'BC Ministry of Public Safety' },
+  { type: 'worksafebc_coverage', status: 'cleared', verifiedDate: '2025-01-05', expiryDate: '2026-12-31', description: 'WorkSafeBC personal optional protection coverage active', issuingAuthority: 'WorkSafeBC' },
+  { type: 'pipa_consent', status: 'cleared', verifiedDate: '2024-11-01', description: 'PIPA privacy consent acknowledged', issuingAuthority: 'Tend Platform' },
+  { type: 'first_aid', status: 'cleared', verifiedDate: '2024-09-01', expiryDate: '2027-09-01', description: 'OFA Level 1 First Aid certification', issuingAuthority: 'Canadian Red Cross' },
+  { type: 'reference_check', status: 'cleared', verifiedDate: '2024-10-28', description: '3 professional references verified', issuingAuthority: 'Tend Verification Team' },
+];
+helpers[0].qualityScore = {
+  overall: 96,
+  punctuality: 98,
+  communication: 97,
+  taskCompletion: 95,
+  elderSatisfaction: 94,
+  firstVisitCallbackCompleted: true,
+  lastSpotCheckDate: '2026-02-10',
+  escalationContactAvailable: true,
+};
+helpers[0].transportSafety = {
+  driverVerified: true,
+  insuranceAttested: true,
+  insuranceExpiryDate: '2026-11-30',
+  vehicleYear: 2022,
+  vehicleMake: 'Toyota Corolla',
+  waitAndAccompanyAvailable: true,
+};
+
+// Helper 1 — James Okafor (enhanced, hasCar)
+helpers[1].verificationRecords = [
+  { type: 'id_passport', status: 'cleared', verifiedDate: '2025-02-01', description: 'Canadian Passport verified', issuingAuthority: 'IRCC' },
+  { type: 'criminal_record_check', status: 'cleared', verifiedDate: '2025-02-10', expiryDate: '2028-02-10', description: 'Criminal Record Check — clear', issuingAuthority: 'RCMP' },
+  { type: 'criminal_record_review', status: 'pending', description: 'BC Criminal Records Review Program — application submitted', issuingAuthority: 'BC Ministry of Public Safety' },
+  { type: 'worksafebc_coverage', status: 'cleared', verifiedDate: '2025-03-01', expiryDate: '2026-12-31', description: 'WorkSafeBC personal optional protection coverage active', issuingAuthority: 'WorkSafeBC' },
+  { type: 'pipa_consent', status: 'cleared', verifiedDate: '2025-02-14', description: 'PIPA privacy consent acknowledged', issuingAuthority: 'Tend Platform' },
+  { type: 'first_aid', status: 'cleared', verifiedDate: '2025-01-15', expiryDate: '2028-01-15', description: 'CPR-C / AED certification', issuingAuthority: 'St. John Ambulance' },
+  { type: 'reference_check', status: 'cleared', verifiedDate: '2025-02-18', description: '2 professional references verified', issuingAuthority: 'Tend Verification Team' },
+];
+helpers[1].qualityScore = {
+  overall: 91,
+  punctuality: 93,
+  communication: 90,
+  taskCompletion: 92,
+  elderSatisfaction: 89,
+  firstVisitCallbackCompleted: true,
+  lastSpotCheckDate: '2026-01-25',
+  escalationContactAvailable: true,
+};
+helpers[1].transportSafety = {
+  driverVerified: true,
+  insuranceAttested: true,
+  insuranceExpiryDate: '2026-08-15',
+  vehicleYear: 2019,
+  vehicleMake: 'Honda Civic',
+  waitAndAccompanyAvailable: false,
+};
+
+// Helper 2 — Priya Sharma (premium, hasCar)
+helpers[2].verificationRecords = [
+  { type: 'id_drivers_license', status: 'cleared', verifiedDate: '2024-09-01', description: 'BC Driver\u2019s License verified', issuingAuthority: 'ICBC' },
+  { type: 'criminal_record_check', status: 'cleared', verifiedDate: '2024-09-10', expiryDate: '2027-09-10', description: 'Criminal Record Check — clear', issuingAuthority: 'RCMP' },
+  { type: 'criminal_record_review', status: 'cleared', verifiedDate: '2024-09-15', expiryDate: '2029-09-15', description: 'BC Criminal Records Review Program — cleared for work with vulnerable adults', issuingAuthority: 'BC Ministry of Public Safety' },
+  { type: 'worksafebc_coverage', status: 'cleared', verifiedDate: '2024-12-15', expiryDate: '2026-12-31', description: 'WorkSafeBC personal optional protection coverage active', issuingAuthority: 'WorkSafeBC' },
+  { type: 'pipa_consent', status: 'cleared', verifiedDate: '2024-09-10', description: 'PIPA privacy consent acknowledged', issuingAuthority: 'Tend Platform' },
+  { type: 'first_aid', status: 'expired', verifiedDate: '2022-06-01', expiryDate: '2025-06-01', description: 'OFA Level 1 First Aid certification — renewal needed', issuingAuthority: 'Canadian Red Cross' },
+  { type: 'reference_check', status: 'cleared', verifiedDate: '2024-09-20', description: '4 professional references verified', issuingAuthority: 'Tend Verification Team' },
+];
+helpers[2].qualityScore = {
+  overall: 98,
+  punctuality: 97,
+  communication: 99,
+  taskCompletion: 98,
+  elderSatisfaction: 98,
+  firstVisitCallbackCompleted: true,
+  lastSpotCheckDate: '2026-02-20',
+  escalationContactAvailable: true,
+};
+helpers[2].transportSafety = {
+  driverVerified: true,
+  insuranceAttested: true,
+  insuranceExpiryDate: '2027-03-15',
+  vehicleYear: 2021,
+  vehicleMake: 'Hyundai Tucson',
+  waitAndAccompanyAvailable: true,
+};
+
+// Helper 3 — Lucas Tremblay (enhanced, no car)
+helpers[3].verificationRecords = [
+  { type: 'id_passport', status: 'cleared', verifiedDate: '2025-05-15', description: 'Canadian Passport verified', issuingAuthority: 'IRCC' },
+  { type: 'criminal_record_check', status: 'cleared', verifiedDate: '2025-05-20', expiryDate: '2028-05-20', description: 'Criminal Record Check — clear', issuingAuthority: 'RCMP' },
+  { type: 'criminal_record_review', status: 'not_submitted', description: 'BC Criminal Records Review Program — not yet submitted', issuingAuthority: 'BC Ministry of Public Safety' },
+  { type: 'worksafebc_coverage', status: 'pending', description: 'WorkSafeBC personal optional protection — application in progress', issuingAuthority: 'WorkSafeBC' },
+  { type: 'pipa_consent', status: 'cleared', verifiedDate: '2025-05-22', description: 'PIPA privacy consent acknowledged', issuingAuthority: 'Tend Platform' },
+  { type: 'first_aid', status: 'cleared', verifiedDate: '2025-04-01', expiryDate: '2028-04-01', description: 'CPR-C / AED certification', issuingAuthority: 'St. John Ambulance' },
+  { type: 'reference_check', status: 'cleared', verifiedDate: '2025-05-28', description: '1 professional reference verified', issuingAuthority: 'Tend Verification Team' },
+];
+helpers[3].qualityScore = {
+  overall: 85,
+  punctuality: 82,
+  communication: 88,
+  taskCompletion: 86,
+  elderSatisfaction: 84,
+  firstVisitCallbackCompleted: true,
+  lastSpotCheckDate: '2026-01-10',
+  escalationContactAvailable: true,
+};
+
+// Helper 4 — Mei Liu (premium, hasCar)
+helpers[4].verificationRecords = [
+  { type: 'id_drivers_license', status: 'cleared', verifiedDate: '2024-07-20', description: 'BC Driver\u2019s License verified', issuingAuthority: 'ICBC' },
+  { type: 'criminal_record_check', status: 'cleared', verifiedDate: '2024-08-01', expiryDate: '2027-08-01', description: 'Criminal Record Check — clear', issuingAuthority: 'RCMP' },
+  { type: 'criminal_record_review', status: 'cleared', verifiedDate: '2024-08-05', expiryDate: '2029-08-05', description: 'BC Criminal Records Review Program — cleared for work with vulnerable adults', issuingAuthority: 'BC Ministry of Public Safety' },
+  { type: 'worksafebc_coverage', status: 'cleared', verifiedDate: '2024-12-01', expiryDate: '2026-12-31', description: 'WorkSafeBC personal optional protection coverage active', issuingAuthority: 'WorkSafeBC' },
+  { type: 'pipa_consent', status: 'cleared', verifiedDate: '2024-08-05', description: 'PIPA privacy consent acknowledged', issuingAuthority: 'Tend Platform' },
+  { type: 'first_aid', status: 'cleared', verifiedDate: '2024-06-15', expiryDate: '2027-06-15', description: 'OFA Level 1 First Aid certification', issuingAuthority: 'Canadian Red Cross' },
+  { type: 'reference_check', status: 'cleared', verifiedDate: '2024-08-12', description: '3 professional references verified', issuingAuthority: 'Tend Verification Team' },
+];
+helpers[4].qualityScore = {
+  overall: 95,
+  punctuality: 99,
+  communication: 94,
+  taskCompletion: 93,
+  elderSatisfaction: 94,
+  firstVisitCallbackCompleted: true,
+  lastSpotCheckDate: '2026-02-15',
+  escalationContactAvailable: true,
+};
+helpers[4].transportSafety = {
+  driverVerified: true,
+  insuranceAttested: true,
+  insuranceExpiryDate: '2026-12-01',
+  vehicleYear: 2023,
+  vehicleMake: 'Tesla Model 3',
+  waitAndAccompanyAvailable: true,
+};
+
+// ─── Family Members ──────────────────────────────────────────────────────────
+export const familyMembers: FamilyMember[] = [
+  {
+    id: 'family-1',
+    firstName: 'Jennifer',
+    lastName: 'Chen',
+    relationship: 'Daughter',
+    city: 'Toronto',
+    linkedElderId: 'elder-1',
+    linkedElderName: 'Margaret Chen',
+    notificationPreferences: {
+      missedVisitAlert: true,
+      visitSummary: true,
+      photoSharing: true,
+      weeklyDigest: true,
+    },
+  },
+];
+export const currentFamilyMember = familyMembers[0];
+
+// ─── Visit Notes ─────────────────────────────────────────────────────────────
+export const visitNotes: VisitNote[] = [
+  {
+    id: 'visit-1',
+    bookingId: 'booking-7',
+    helperId: 'helper-1',
+    helperName: 'Sarah Williams',
+    elderId: 'elder-1',
+    date: '2026-02-10',
+    service: 'groceries',
+    summary: 'Picked up groceries from Save-On-Foods on 4th Ave. Margaret had a detailed list ready. We chatted about her garden plans while putting everything away. She seemed in great spirits today.',
+    mood: 'great',
+    tasksCompleted: [
+      { id: 'task-1a', label: 'Pick up grocery list from fridge', completed: true },
+      { id: 'task-1b', label: 'Shop at Save-On-Foods Kitsilano', completed: true },
+      { id: 'task-1c', label: 'Unpack and organize in kitchen', completed: true },
+      { id: 'task-1d', label: 'Check expiry dates on existing items', completed: true },
+    ],
+    photos: [
+      { id: 'photo-1a', caption: 'Fridge fully stocked', consentGiven: true },
+    ],
+    duration: 1.5,
+  },
+  {
+    id: 'visit-2',
+    bookingId: 'booking-4',
+    helperId: 'helper-3',
+    helperName: 'Priya Sharma',
+    elderId: 'elder-1',
+    date: '2026-02-20',
+    service: 'garden',
+    summary: 'Spent the afternoon in Margaret\'s garden pruning roses and tidying the beds for spring planting. Margaret joined me for most of it and showed me her favourite tomato varieties. She was in wonderful spirits.',
+    mood: 'great',
+    tasksCompleted: [
+      { id: 'task-2a', label: 'Prune rose bushes', completed: true },
+      { id: 'task-2b', label: 'Weed front garden beds', completed: true },
+      { id: 'task-2c', label: 'Turn compost pile', completed: true },
+      { id: 'task-2d', label: 'Water all indoor plants', completed: true },
+      { id: 'task-2e', label: 'Plant spring bulbs', completed: false },
+    ],
+    photos: [
+      { id: 'photo-2a', caption: 'Rose bushes pruned and ready for spring', consentGiven: true },
+      { id: 'photo-2b', caption: 'Margaret showing her heirloom tomato seedlings', consentGiven: true },
+    ],
+    duration: 3,
+  },
+  {
+    id: 'visit-3',
+    bookingId: 'booking-1',
+    helperId: 'helper-1',
+    helperName: 'Sarah Williams',
+    elderId: 'elder-1',
+    date: '2026-02-26',
+    service: 'companionship',
+    summary: 'Lovely walk along the Kitsilano seawall despite the drizzle. Margaret wore her new rain jacket and we stopped at Bean Around the World for tea. She talked about her teaching days in Hong Kong. Good mood overall but mentioned some knee stiffness.',
+    mood: 'good',
+    tasksCompleted: [
+      { id: 'task-3a', label: 'Seawall walk (30+ minutes)', completed: true },
+      { id: 'task-3b', label: 'Stop for tea or coffee', completed: true },
+      { id: 'task-3c', label: 'Check medication reminder setup', completed: true },
+      { id: 'task-3d', label: 'Light stretches before walk', completed: false },
+    ],
+    duration: 2,
+  },
+  {
+    id: 'visit-4',
+    bookingId: 'booking-1',
+    helperId: 'helper-1',
+    helperName: 'Sarah Williams',
+    elderId: 'elder-1',
+    date: '2026-03-05',
+    service: 'companionship',
+    summary: 'Margaret was a bit quieter today. We stayed in and did a jigsaw puzzle together. She mentioned missing Jennifer and feeling a bit lonely this week. I made her chrysanthemum tea and we looked through some old photo albums. Perked up towards the end of the visit.',
+    mood: 'okay',
+    tasksCompleted: [
+      { id: 'task-4a', label: 'Companionship activity (puzzle, cards, etc.)', completed: true },
+      { id: 'task-4b', label: 'Prepare hot beverage', completed: true },
+      { id: 'task-4c', label: 'Check in on emotional wellbeing', completed: true },
+    ],
+    duration: 2,
+  },
+  {
+    id: 'visit-5',
+    bookingId: 'booking-3',
+    helperId: 'helper-3',
+    helperName: 'Priya Sharma',
+    elderId: 'elder-1',
+    date: '2026-03-01',
+    service: 'meal_prep',
+    summary: 'Prepared a week of meals: chicken congee, stir-fried vegetables with tofu, and steamed fish with ginger. Margaret helped with the congee and taught me her mother\'s recipe. We packaged everything into labelled containers. She was in good spirits and excited to not have to cook all week.',
+    mood: 'good',
+    tasksCompleted: [
+      { id: 'task-5a', label: 'Prepare 5 main dishes for the week', completed: true },
+      { id: 'task-5b', label: 'Label and date all containers', completed: true },
+      { id: 'task-5c', label: 'Clean kitchen after cooking', completed: true },
+      { id: 'task-5d', label: 'Organize fridge for easy access', completed: true },
+      { id: 'task-5e', label: 'Write reheating instructions', completed: true },
+    ],
+    duration: 3,
+  },
+];
+
+// ─── Family Alerts ───────────────────────────────────────────────────────────
+export const familyAlerts: FamilyAlert[] = [
+  {
+    id: 'alert-1',
+    type: 'missed_visit',
+    title: 'Missed Visit Alert',
+    description: 'Sarah didn\u2019t check in for Wednesday companionship with Margaret. We\u2019re reaching out to confirm her status.',
+    timestamp: '2026-03-05T10:30:00Z',
+    read: false,
+    severity: 'urgent',
+    linkedBookingId: 'booking-1',
+  },
+  {
+    id: 'alert-2',
+    type: 'schedule_change',
+    title: 'Schedule Change',
+    description: 'Priya Sharma will cover Thursday meal prep this week instead of Sarah. Same time, same service — no action needed.',
+    timestamp: '2026-03-04T08:00:00Z',
+    read: false,
+    severity: 'warning',
+  },
+  {
+    id: 'alert-3',
+    type: 'wellness_note',
+    title: 'Visit Complete',
+    description: 'Sarah completed the companionship visit with Margaret. Mood was noted as "okay" — Margaret mentioned feeling a bit lonely this week.',
+    timestamp: '2026-03-05T12:15:00Z',
+    read: true,
+    severity: 'info',
+    linkedBookingId: 'booking-1',
+  },
+  {
+    id: 'alert-4',
+    type: 'photo_shared',
+    title: 'Photo Shared',
+    description: 'Sarah shared 2 photos from today\u2019s walk along the Kitsilano seawall with Margaret.',
+    timestamp: '2026-02-26T14:00:00Z',
+    read: true,
+    severity: 'info',
+  },
+];
+
+// ─── Care Team Members ───────────────────────────────────────────────────────
+export const careTeamMembers: CareTeamMember[] = [
+  {
+    helperId: 'helper-1',
+    helperName: 'Sarah Williams',
+    role: 'primary',
+    services: ['companionship', 'groceries'],
+    rating: 4.9,
+    lastVisit: '2026-03-05',
+  },
+  {
+    helperId: 'helper-3',
+    helperName: 'Priya Sharma',
+    role: 'primary',
+    services: ['meal_prep', 'housekeeping'],
+    rating: 5.0,
+    lastVisit: '2026-03-01',
+  },
+  {
+    helperId: 'helper-2',
+    helperName: 'James Okafor',
+    role: 'backup',
+    services: ['companionship', 'transportation'],
+    rating: 4.8,
+    lastVisit: '2026-02-15',
+  },
+];
+
+// ─── Recurring Schedules ─────────────────────────────────────────────────────
+export const recurringSchedules: RecurringSchedule[] = [
+  {
+    id: 'schedule-1',
+    elderId: 'elder-1',
+    elderName: 'Margaret Chen',
+    primaryHelperId: 'helper-1',
+    primaryHelperName: 'Sarah Williams',
+    backupHelperId: 'helper-3',
+    backupHelperName: 'Priya Sharma',
+    service: 'companionship',
+    dayOfWeek: 'Wednesday',
+    startTime: '10:00',
+    endTime: '12:00',
+    frequency: 'weekly',
+    isActive: true,
+    startedDate: '2025-12-04',
+    totalSessions: 12,
+  },
+  {
+    id: 'schedule-2',
+    elderId: 'elder-1',
+    elderName: 'Margaret Chen',
+    primaryHelperId: 'helper-1',
+    primaryHelperName: 'Sarah Williams',
+    backupHelperId: 'helper-2',
+    backupHelperName: 'James Okafor',
+    service: 'groceries',
+    dayOfWeek: 'Friday',
+    startTime: '11:00',
+    endTime: '12:30',
+    frequency: 'biweekly',
+    isActive: true,
+    startedDate: '2026-01-10',
+    totalSessions: 4,
+  },
+];
+
+// ─── Regular Helpers ─────────────────────────────────────────────────────────
+export const regularHelpers: RegularHelper[] = [
+  {
+    helperId: 'helper-1',
+    helperName: 'Sarah Williams',
+    services: ['companionship', 'groceries'],
+    totalVisits: 24,
+    lastVisit: '2026-03-05',
+    nextVisit: '2026-03-12',
+    rating: 4.9,
+    isRecurring: true,
+  },
+  {
+    helperId: 'helper-3',
+    helperName: 'Priya Sharma',
+    services: ['meal_prep', 'housekeeping', 'garden'],
+    totalVisits: 8,
+    lastVisit: '2026-03-01',
+    nextVisit: '2026-03-07',
+    rating: 5.0,
+    isRecurring: true,
+  },
+  {
+    helperId: 'helper-2',
+    helperName: 'James Okafor',
+    services: ['companionship', 'transportation'],
+    totalVisits: 3,
+    lastVisit: '2026-02-15',
+    rating: 4.8,
+    isRecurring: false,
+  },
+];
+
+// ─── Care Bundles ────────────────────────────────────────────────────────────
+export const careBundles: CareBundle[] = [
+  {
+    id: 'bundle-1',
+    name: 'Weekly Essentials',
+    tagline: 'A tidy home and a full fridge',
+    description: 'Light housekeeping and grocery shopping bundled together for simple weekly upkeep. Perfect for elders who want a clean space and fresh food without the hassle.',
+    icon: 'home',
+    color: '#00CEC9',
+    services: [
+      { service: 'housekeeping', hoursPerWeek: 2 },
+      { service: 'groceries', hoursPerWeek: 1.5 },
+    ],
+    weeklyPrice: 82,
+    regularPrice: 97,
+    savingsPercent: 15,
+    popular: true,
+  },
+  {
+    id: 'bundle-2',
+    name: 'Social Butterfly',
+    tagline: 'Companionship that brightens your week',
+    description: 'Three two-hour companionship sessions per week — walks, conversation, puzzles, outings, or simply sharing a cup of tea. Ideal for elders who value connection.',
+    icon: 'heart',
+    color: '#E84393',
+    services: [
+      { service: 'companionship', hoursPerWeek: 6 },
+    ],
+    weeklyPrice: 145,
+    regularPrice: 168,
+    savingsPercent: 14,
+  },
+  {
+    id: 'bundle-3',
+    name: 'Independent Living',
+    tagline: 'Stay independent with a helping hand',
+    description: 'Transport to appointments, errands, and home-cooked meals prepared for the week. Designed for active elders who need logistical support to stay independent.',
+    icon: 'car',
+    color: '#0984E3',
+    services: [
+      { service: 'transportation', hoursPerWeek: 2 },
+      { service: 'errands', hoursPerWeek: 1.5 },
+      { service: 'meal_prep', hoursPerWeek: 3 },
+    ],
+    weeklyPrice: 168,
+    regularPrice: 198,
+    savingsPercent: 15,
+  },
+];
+
+// ─── Trip Logs ───────────────────────────────────────────────────────────────
+export const tripLogs: TripLog[] = [
+  {
+    id: 'trip-1',
+    bookingId: 'booking-2',
+    pickup: '2138 W 4th Ave, Vancouver (Margaret\u2019s home)',
+    destination: 'Vancouver General Hospital, 899 W 12th Ave',
+    pickupTime: '2026-02-18T09:05:00Z',
+    dropoffTime: '2026-02-18T09:40:00Z',
+    duration: 35,
+    waitAndAccompany: true,
+    helperName: 'Sarah Williams',
+    status: 'completed',
+  },
+  {
+    id: 'trip-2',
+    bookingId: 'booking-7',
+    pickup: '2138 W 4th Ave, Vancouver (Margaret\u2019s home)',
+    destination: 'Save-On-Foods, 2245 W Broadway, Vancouver',
+    pickupTime: '2026-02-10T11:00:00Z',
+    dropoffTime: '2026-02-10T11:25:00Z',
+    duration: 25,
+    waitAndAccompany: false,
+    helperName: 'Sarah Williams',
+    status: 'completed',
+  },
+];
