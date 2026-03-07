@@ -38,7 +38,7 @@ export default function CareBundleCard({ bundle, onPress }: CareBundleCardProps)
             color={bundle.color}
           />
         </View>
-        <View style={styles.headerText}>
+        <View style={[styles.headerText, bundle.popular && { paddingRight: 72 }]}>
           <Text style={styles.bundleName}>{bundle.name}</Text>
           <Text style={styles.tagline}>{bundle.tagline}</Text>
         </View>
