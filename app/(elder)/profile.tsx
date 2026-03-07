@@ -113,7 +113,7 @@ export default function ElderProfileScreen() {
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>Your Regular Helpers</Text>
           {regularHelpers.map((rh) => (
-            <RegularHelperCard key={rh.helperId} regular={rh} onPress={() => {}} />
+            <RegularHelperCard key={rh.helperId} regularHelper={rh} />
           ))}
         </View>
 
