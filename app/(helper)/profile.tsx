@@ -78,7 +78,7 @@ export default function HelperProfileScreen() {
         {/* Enhanced Verification Audit Trail */}
         {helper.verificationRecords && helper.verificationRecords.length > 0 ? (
           <View style={styles.badgesSection}>
-            <EnhancedTrustBadge records={helper.verificationRecords} />
+            <EnhancedTrustBadge verificationRecords={helper.verificationRecords} />
           </View>
         ) : (
           <View style={styles.badgesSection}>
@@ -98,14 +98,14 @@ export default function HelperProfileScreen() {
         {/* Human QA Score */}
         {helper.qualityScore && (
           <View style={{ paddingHorizontal: 20, marginBottom: 8 }}>
-            <QualityScoreCard score={helper.qualityScore} />
+            <QualityScoreCard qualityScore={helper.qualityScore} />
           </View>
         )}
 
         {/* Transport Safety */}
         {helper.transportSafety && (
           <View style={{ paddingHorizontal: 20, marginBottom: 8 }}>
-            <TransportSafetyCard safety={helper.transportSafety} />
+            <TransportSafetyCard transportSafety={helper.transportSafety} />
           </View>
         )}
 
@@ -128,6 +128,33 @@ export default function HelperProfileScreen() {
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>About Me</Text>
           <Text style={styles.bioText}>{helper.bio}</Text>
+        </View>
+
+        {/* Service Area */}
+        <View style={styles.section}>
+          <Text style={styles.sectionTitle}>Service Area</Text>
+          <View style={styles.addressCard}>
+            <View style={styles.addressRow}>
+              <View style={styles.addressIconCircle}>
+                <Ionicons name={'location' as any} size={18} color={palette.primary} />
+              </View>
+              <View style={styles.addressContent}>
+                <Text style={styles.addressStreet}>{helper.streetAddress}</Text>
+                <Text style={styles.addressCity}>
+                  {helper.city}, {helper.province} {helper.postalCode}
+                </Text>
+              </View>
+              <TouchableOpacity style={styles.editButton} activeOpacity={0.6}>
+                <Ionicons name={'create-outline' as any} size={16} color={palette.primary} />
+              </TouchableOpacity>
+            </View>
+            <View style={styles.addressNote}>
+              <Ionicons name={'information-circle-outline' as any} size={14} color={palette.textTertiary} />
+              <Text style={styles.addressNoteText}>
+                Your postal code determines which elders see you nearby
+              </Text>
+            </View>
+          </View>
         </View>
 
         {/* Services & Rates */}
@@ -375,6 +402,60 @@ const styles = StyleSheet.create({
   },
   ratingInline: {
     marginBottom: 12,
+  },
+  addressCard: {
+    backgroundColor: palette.surface,
+    borderRadius: theme.borderRadius.lg,
+    padding: 14,
+    ...theme.shadow.sm,
+  },
+  addressRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  addressIconCircle: {
+    width: 38,
+    height: 38,
+    borderRadius: 19,
+    backgroundColor: palette.primaryLight,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginRight: 12,
+  },
+  addressContent: {
+    flex: 1,
+  },
+  addressStreet: {
+    fontSize: 15,
+    fontWeight: '600',
+    color: palette.textPrimary,
+  },
+  addressCity: {
+    fontSize: 13,
+    color: palette.textSecondary,
+    marginTop: 2,
+  },
+  editButton: {
+    width: 32,
+    height: 32,
+    borderRadius: 16,
+    backgroundColor: palette.primaryLight,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  addressNote: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 6,
+    marginTop: 10,
+    paddingTop: 10,
+    borderTopWidth: 1,
+    borderTopColor: palette.borderLight,
+  },
+  addressNoteText: {
+    fontSize: 12,
+    color: palette.textTertiary,
+    flex: 1,
   },
   bioText: {
     fontSize: 14,

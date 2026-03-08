@@ -49,7 +49,7 @@ export default function FamilyOverviewScreen() {
       >
         {/* Welcome header */}
         <View style={styles.welcomeRow}>
-          <View>
+          <View style={styles.welcomeText}>
             <Text style={styles.greeting}>Hi {family.firstName},</Text>
             <Text style={styles.subtitle}>
               Here's {family.linkedElderName}'s week
@@ -125,12 +125,16 @@ const styles = StyleSheet.create({
     paddingTop: 12,
     paddingBottom: 16,
   },
+  welcomeText: {
+    flex: 1,
+    marginRight: 12,
+  },
   greeting: {
     fontSize: 15,
     color: palette.textSecondary,
   },
   subtitle: {
-    fontSize: 26,
+    fontSize: 22,
     fontWeight: '800',
     color: palette.textPrimary,
   },

@@ -29,7 +29,9 @@ export interface Elder {
   id: string;
   firstName: string;
   lastName: string;
+  streetAddress: string;
   city: string;
+  province: string;
   postalCode: string;
   avatarUrl?: string;
   rating: number;
@@ -55,7 +57,9 @@ export interface Helper {
   lastName: string;
   gender: Gender;
   ageGroup: AgeGroup;
+  streetAddress: string;
   city: string;
+  province: string;
   postalCode: string;
   distance?: number;         // km from searcher
   avatarUrl?: string;
