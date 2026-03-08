@@ -12,11 +12,13 @@ import {
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { palette, theme } from '../constants/Colors';
 import Button from '../components/Button';
 
 export default function LoginScreen() {
   const router = useRouter();
+  const insets = useSafeAreaInsets();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
@@ -31,7 +33,7 @@ export default function LoginScreen() {
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
     >
       <ScrollView
-        contentContainerStyle={styles.scroll}
+        contentContainerStyle={[styles.scroll, { paddingTop: Math.max(insets.top + 12, 60) }]}
         keyboardShouldPersistTaps="handled"
       >
         {/* Close button */}
@@ -127,8 +129,8 @@ export default function LoginScreen() {
             activeOpacity={0.7}
           >
             <Ionicons name={'heart' as any} size={22} color={palette.primary} />
-            <Text style={styles.demoCardText}>Demo as Elder</Text>
-            <Text style={styles.demoCardSub}>Margaret Chen</Text>
+            <Text style={styles.demoCardText}>Elder</Text>
+            <Text style={styles.demoCardSub}>Margaret</Text>
           </TouchableOpacity>
 
           <TouchableOpacity
@@ -137,20 +139,20 @@ export default function LoginScreen() {
             activeOpacity={0.7}
           >
             <Ionicons name={'hand-left' as any} size={22} color="#6C5CE7" />
-            <Text style={styles.demoCardText}>Demo as Helper</Text>
-            <Text style={styles.demoCardSub}>Sarah Williams</Text>
+            <Text style={styles.demoCardText}>Helper</Text>
+            <Text style={styles.demoCardSub}>Sarah</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            style={styles.demoCard}
+            onPress={handleDemoFamily}
+            activeOpacity={0.7}
+          >
+            <Ionicons name={'people' as any} size={22} color="#4F46E5" />
+            <Text style={styles.demoCardText}>Family</Text>
+            <Text style={styles.demoCardSub}>Jennifer</Text>
           </TouchableOpacity>
         </View>
-
-        <TouchableOpacity
-          style={[styles.demoCard, { marginHorizontal: 0, marginBottom: 24 }]}
-          onPress={handleDemoFamily}
-          activeOpacity={0.7}
-        >
-          <Ionicons name={'people' as any} size={22} color="#4F46E5" />
-          <Text style={styles.demoCardText}>Demo as Family</Text>
-          <Text style={styles.demoCardSub}>Jennifer Chen</Text>
-        </TouchableOpacity>
 
         {/* Sign up */}
         <View style={styles.signUpRow}>
@@ -171,7 +173,6 @@ const styles = StyleSheet.create({
   },
   scroll: {
     paddingHorizontal: 24,
-    paddingTop: 60,
     paddingBottom: 40,
   },
   closeButton: {
@@ -234,7 +235,7 @@ const styles = StyleSheet.create({
   },
   input: {
     flex: 1,
-    fontSize: 15,
+    fontSize: 16,
     color: palette.textPrimary,
   },
   forgotButton: {
@@ -263,7 +264,7 @@ const styles = StyleSheet.create({
   },
   demoSection: {
     flexDirection: 'row',
-    gap: 12,
+    gap: 10,
     marginBottom: 32,
   },
   demoCard: {

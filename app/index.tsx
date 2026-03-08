@@ -6,23 +6,26 @@ import {
   TouchableOpacity,
   StyleSheet,
   Dimensions,
+  Platform,
 } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Ionicons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { palette } from '../constants/Colors';
 
 const { width } = Dimensions.get('window');
 
 export default function WelcomeScreen() {
   const router = useRouter();
+  const insets = useSafeAreaInsets();
 
   return (
     <LinearGradient
       colors={['#009966', '#00B47C', '#00D4A1']}
       start={{ x: 0, y: 0 }}
       end={{ x: 1, y: 1 }}
-      style={styles.container}
+      style={[styles.container, { paddingTop: Math.max(insets.top + 12, 48) }]}
     >
       {/* Brand area */}
       <View style={styles.brandArea}>
@@ -116,7 +119,7 @@ export default function WelcomeScreen() {
       </View>
 
       {/* Footer */}
-      <View style={styles.footer}>
+      <View style={[styles.footer, { paddingBottom: Math.max(insets.bottom + 12, 48) }]}>
         <TouchableOpacity onPress={() => router.push('/login')}>
           <Text style={styles.loginLink}>
             Already have an account?{' '}
@@ -131,7 +134,6 @@ export default function WelcomeScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingTop: 48,
   },
   brandArea: {
     alignItems: 'center',
@@ -217,7 +219,6 @@ const styles = StyleSheet.create({
     lineHeight: 18,
   },
   footer: {
-    paddingBottom: 48,
     paddingTop: 12,
     backgroundColor: palette.background,
     alignItems: 'center',

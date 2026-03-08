@@ -1,0 +1,31 @@
+{
+  "name": "Tend — Elder Care Companion",
+  "short_name": "Tend",
+  "description": "Caring companionship for seniors, a tap away",
+  "start_url": "/tend-demo/",
+  "scope": "/tend-demo/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "theme_color": "#00B47C",
+  "background_color": "#F8F9FA",
+  "categories": ["health", "lifestyle"],
+  "icons": [
+    {
+      "src": "/tend-demo/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/tend-demo/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/tend-demo/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    }
+  ]
+}

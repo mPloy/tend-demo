@@ -71,7 +71,7 @@ const styles = StyleSheet.create({
   },
   input: {
     flex: 1,
-    fontSize: 15,
+    fontSize: 16,
     color: palette.textPrimary,
     height: '100%',
   },
