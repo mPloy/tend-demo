@@ -61,9 +61,13 @@ export function useMessages(): UseMessagesResult {
   }, [isDemo, profile?.id]);
 
   if (isDemo) {
-    const totalUnread = mockThreads.reduce((sum, t) => sum + t.unreadCount, 0);
+    // Filter threads for the current user in demo mode
+    const myThreads = profile?.id
+      ? mockThreads.filter((t) => t.participantIds.includes(profile.id))
+      : mockThreads;
+    const totalUnread = myThreads.reduce((sum, t) => sum + t.unreadCount, 0);
     return {
-      threads: mockThreads,
+      threads: myThreads,
       isLoading: false,
       error: null,
       totalUnread,

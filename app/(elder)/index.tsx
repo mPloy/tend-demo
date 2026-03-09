@@ -11,7 +11,8 @@ import {
 import { Ionicons } from '@expo/vector-icons';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { palette, theme, serviceConfig } from '../../constants/Colors';
-import { helpers, careBundles } from '../../constants/MockData';
+import { useHelpers } from '../../hooks/useHelpers';
+import { useCareBundles } from '../../hooks/useCareBundles';
 import SearchBar from '../../components/SearchBar';
 import HelperProfileCard from '../../components/HelperProfileCard';
 import CareBundleCard from '../../components/CareBundleCard';
@@ -30,6 +31,8 @@ type SortOption = 'rating' | 'distance' | 'price';
 
 export default function ExploreScreen() {
   const insets = useSafeAreaInsets();
+  const { helpers } = useHelpers();
+  const { bundles: careBundles } = useCareBundles();
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedService, setSelectedService] = useState<'all' | ServiceType>('all');
   const [sortBy, setSortBy] = useState<SortOption>('rating');

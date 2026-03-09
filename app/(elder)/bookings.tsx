@@ -10,27 +10,26 @@ import {
 import { Ionicons } from '@expo/vector-icons';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { palette, theme } from '../../constants/Colors';
-import { bookings } from '../../constants/MockData';
+import { useBookings } from '../../hooks/useBookings';
 import BookingCard from '../../components/BookingCard';
 
 type Tab = 'upcoming' | 'active' | 'past';
 
 export default function ElderBookingsScreen() {
   const insets = useSafeAreaInsets();
+  const { bookings } = useBookings();
   const [activeTab, setActiveTab] = useState<Tab>('upcoming');
 
-  // Filter bookings for elder-1 (Margaret)
-  const elderBookings = bookings.filter((b) => b.elderId === 'elder-1');
-
-  const upcoming = elderBookings.filter(
+  // Hook already filters bookings for the current user
+  const upcoming = bookings.filter(
     (b) => b.status === 'pending' || b.status === 'confirmed'
   );
-  const active = elderBookings.filter((b) => b.status === 'active');
-  const past = elderBookings.filter(
+  const active = bookings.filter((b) => b.status === 'active');
+  const past = bookings.filter(
     (b) => b.status === 'completed' || b.status === 'cancelled'
   );
 
-  const tabConfig: { key: Tab; label: string; data: typeof elderBookings }[] = [
+  const tabConfig: { key: Tab; label: string; data: typeof bookings }[] = [
     { key: 'upcoming', label: 'Upcoming', data: upcoming },
     { key: 'active', label: 'Active', data: active },
     { key: 'past', label: 'Past', data: past },

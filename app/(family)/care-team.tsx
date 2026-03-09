@@ -8,11 +8,12 @@ import {
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { palette, theme } from '../../constants/Colors';
-import { careTeamMembers, helpers } from '../../constants/MockData';
+import { useCareTeam } from '../../hooks/useCareTeam';
 import CareTeamCard from '../../components/CareTeamCard';
 
 export default function CareTeamScreen() {
   const insets = useSafeAreaInsets();
+  const { members: careTeamMembers, helpers } = useCareTeam();
 
   const primaryMembers = careTeamMembers.filter((m) => m.role === 'primary');
   const backupMembers = careTeamMembers.filter((m) => m.role === 'backup');

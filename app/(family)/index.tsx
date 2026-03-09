@@ -10,27 +10,27 @@ import {
 import { Ionicons } from '@expo/vector-icons';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { palette, theme } from '../../constants/Colors';
-import {
-  bookings,
-  familyAlerts,
-  careTeamMembers,
-  currentFamilyMember,
-  helpers,
-} from '../../constants/MockData';
+import { useProfile } from '../../hooks/useProfile';
+import { useBookings } from '../../hooks/useBookings';
+import { useFamilyAlerts } from '../../hooks/useFamilyAlerts';
+import { useCareTeam } from '../../hooks/useCareTeam';
 import MiniScheduleTimeline from '../../components/MiniScheduleTimeline';
 import AlertCard from '../../components/AlertCard';
 import CareTeamCard from '../../components/CareTeamCard';
 
 export default function FamilyOverviewScreen() {
   const insets = useSafeAreaInsets();
-  const family = currentFamilyMember;
+  const { family } = useProfile();
+  const { bookings } = useBookings();
+  const { alerts: familyAlerts } = useFamilyAlerts();
+  const { members: careTeamMembers, helpers } = useCareTeam();
 
-  // Upcoming bookings for the linked elder
+  if (!family) return null;
+
+  // Upcoming bookings for the linked elder (hook filters for family role)
   const upcomingBookings = bookings
     .filter(
-      (b) =>
-        b.elderId === family.linkedElderId &&
-        (b.status === 'confirmed' || b.status === 'pending')
+      (b) => b.status === 'confirmed' || b.status === 'pending'
     )
     .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
 

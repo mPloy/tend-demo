@@ -10,9 +10,10 @@ import {
 import { Ionicons } from '@expo/vector-icons';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useRouter } from 'expo-router';
-import { palette, theme } from '../../constants/Colors';
-import { currentElder, regularHelpers, recurringSchedules } from '../../constants/MockData';
-import { serviceConfig } from '../../constants/Colors';
+import { palette, theme, serviceConfig } from '../../constants/Colors';
+import { useProfile } from '../../hooks/useProfile';
+import { useRecurringSchedules } from '../../hooks/useRecurringSchedules';
+import { useAuth } from '../../contexts/AuthContext';
 import RatingStars from '../../components/RatingStars';
 import RegularHelperCard from '../../components/RegularHelperCard';
 import RecurringScheduleCard from '../../components/RecurringScheduleCard';
@@ -20,7 +21,11 @@ import RecurringScheduleCard from '../../components/RecurringScheduleCard';
 export default function ElderProfileScreen() {
   const insets = useSafeAreaInsets();
   const router = useRouter();
-  const elder = currentElder;
+  const { signOut } = useAuth();
+  const { elder } = useProfile();
+  const { schedules: recurringSchedules, regularHelpers } = useRecurringSchedules();
+
+  if (!elder) return null;
 
   const initials = `${elder.firstName[0]}${elder.lastName[0]}`;
   const memberDate = new Date(elder.memberSince).toLocaleDateString('en-CA', {
@@ -186,7 +191,7 @@ export default function ElderProfileScreen() {
         <TouchableOpacity
           style={styles.signOutButton}
           activeOpacity={0.7}
-          onPress={() => router.replace('/')}
+          onPress={async () => { await signOut(); router.replace('/'); }}
         >
           <Ionicons
             name={'log-out-outline' as any}

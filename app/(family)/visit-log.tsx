@@ -10,7 +10,7 @@ import {
 import { Ionicons } from '@expo/vector-icons';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { palette, theme } from '../../constants/Colors';
-import { visitNotes } from '../../constants/MockData';
+import { useVisitNotes } from '../../hooks/useVisitNotes';
 import VisitNoteCard from '../../components/VisitNoteCard';
 
 type FilterOption = 'week' | 'month' | 'all';
@@ -30,6 +30,7 @@ function isWithinDays(dateStr: string, days: number): boolean {
 
 export default function VisitLogScreen() {
   const insets = useSafeAreaInsets();
+  const { visitNotes } = useVisitNotes();
   const [filter, setFilter] = useState<FilterOption>('all');
 
   const filteredNotes = visitNotes.filter((note) => {

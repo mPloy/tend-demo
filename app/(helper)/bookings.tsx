@@ -10,25 +10,24 @@ import {
 import { Ionicons } from '@expo/vector-icons';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { palette, theme } from '../../constants/Colors';
-import { bookings } from '../../constants/MockData';
+import { useBookings } from '../../hooks/useBookings';
 import BookingCard from '../../components/BookingCard';
 
 type Tab = 'upcoming' | 'past';
 
 export default function HelperBookingsScreen() {
   const insets = useSafeAreaInsets();
+  const { bookings } = useBookings();
   const [activeTab, setActiveTab] = useState<Tab>('upcoming');
 
-  // Filter bookings for helper-1 (Sarah)
-  const helperBookings = bookings.filter((b) => b.helperId === 'helper-1');
-
-  const upcoming = helperBookings.filter(
+  // Hook already filters bookings for the current helper
+  const upcoming = bookings.filter(
     (b) =>
       b.status === 'pending' ||
       b.status === 'confirmed' ||
       b.status === 'active'
   );
-  const past = helperBookings.filter(
+  const past = bookings.filter(
     (b) => b.status === 'completed' || b.status === 'cancelled'
   );
 
@@ -43,7 +42,7 @@ export default function HelperBookingsScreen() {
       dayName: d.toLocaleDateString('en-CA', { weekday: 'short' }),
       dayNum: d.getDate(),
       isToday: d.toDateString() === today.toDateString(),
-      hasBooking: helperBookings.some(
+      hasBooking: bookings.some(
         (b) =>
           new Date(b.date).toDateString() === d.toDateString() &&
           (b.status === 'confirmed' || b.status === 'active')

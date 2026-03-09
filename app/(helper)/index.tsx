@@ -10,15 +10,19 @@ import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { palette, theme } from '../../constants/Colors';
-import { bookings, currentHelper } from '../../constants/MockData';
+import { useBookings } from '../../hooks/useBookings';
+import { useProfile } from '../../hooks/useProfile';
 import BookingCard from '../../components/BookingCard';
 
 export default function HelperDashboardScreen() {
   const insets = useSafeAreaInsets();
-  const helper = currentHelper;
+  const { helper } = useProfile();
+  const { bookings } = useBookings();
 
-  // Helper's bookings
-  const myBookings = bookings.filter((b) => b.helperId === helper.id);
+  if (!helper) return null;
+
+  // Hook already filters bookings for the current helper
+  const myBookings = bookings;
   const pendingRequests = myBookings.filter((b) => b.status === 'pending');
   const todayBookings = myBookings.filter(
     (b) => b.status === 'confirmed' || b.status === 'active'

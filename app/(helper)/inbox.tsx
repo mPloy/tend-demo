@@ -10,19 +10,18 @@ import {
 import { Ionicons } from '@expo/vector-icons';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { palette, theme } from '../../constants/Colors';
-import { messageThreads } from '../../constants/MockData';
+import { useMessages } from '../../hooks/useMessages';
+import { useAuth } from '../../contexts/AuthContext';
 import type { MessageThread } from '../../types';
 
 export default function HelperInboxScreen() {
   const insets = useSafeAreaInsets();
-
-  // Filter threads where helper-1 is participant
-  const myThreads = messageThreads.filter((t) =>
-    t.participantIds.includes('helper-1')
-  );
+  const { threads: myThreads } = useMessages();
+  const { profile } = useAuth();
+  const currentUserId = profile?.id || 'helper-1';
 
   const getOtherName = (thread: MessageThread) => {
-    const idx = thread.participantIds.indexOf('helper-1');
+    const idx = thread.participantIds.indexOf(currentUserId);
     return thread.participantNames[idx === 0 ? 1 : 0];
   };
 

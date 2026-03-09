@@ -10,7 +10,9 @@ import {
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { useRouter } from 'expo-router';
 import { palette, theme } from '../../constants/Colors';
+import { useAuth } from '../../contexts/AuthContext';
 
 interface ToggleRowProps {
   label: string;
@@ -69,6 +71,8 @@ const settingStyles = StyleSheet.create({
 
 export default function FamilySettingsScreen() {
   const insets = useSafeAreaInsets();
+  const router = useRouter();
+  const { signOut } = useAuth();
 
   // Notification toggles
   const [missedVisitAlerts, setMissedVisitAlerts] = useState(true);
@@ -157,6 +161,7 @@ export default function FamilySettingsScreen() {
           <TouchableOpacity
             style={styles.signOutButton}
             activeOpacity={0.7}
+            onPress={async () => { await signOut(); router.replace('/'); }}
           >
             <Ionicons
               name={'log-out-outline' as any}

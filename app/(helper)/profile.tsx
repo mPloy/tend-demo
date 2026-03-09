@@ -12,7 +12,9 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useRouter } from 'expo-router';
 import { palette, theme, serviceConfig } from '../../constants/Colors';
-import { currentHelper, reviews } from '../../constants/MockData';
+import { useProfile } from '../../hooks/useProfile';
+import { useReviews } from '../../hooks/useReviews';
+import { useAuth } from '../../contexts/AuthContext';
 import RatingStars from '../../components/RatingStars';
 import TrustBadge from '../../components/TrustBadge';
 import ReviewCard from '../../components/ReviewCard';
@@ -23,7 +25,11 @@ import TransportSafetyCard from '../../components/TransportSafetyCard';
 export default function HelperProfileScreen() {
   const insets = useSafeAreaInsets();
   const router = useRouter();
-  const helper = currentHelper;
+  const { signOut } = useAuth();
+  const { helper } = useProfile();
+  const { reviews } = useReviews();
+
+  if (!helper) return null;
 
   const initials = `${helper.firstName[0]}${helper.lastName[0]}`;
   const memberDate = new Date(helper.memberSince).toLocaleDateString('en-CA', {
@@ -278,7 +284,7 @@ export default function HelperProfileScreen() {
         <TouchableOpacity
           style={styles.signOutButton}
           activeOpacity={0.7}
-          onPress={() => router.replace('/')}
+          onPress={async () => { await signOut(); router.replace('/'); }}
         >
           <Ionicons
             name={'log-out-outline' as any}
