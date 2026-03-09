@@ -1,4 +1,4 @@
-// Tend — Login / sign-in screen
+// Tend — Login / sign-in screen (wired to Supabase auth + demo mode)
 import React, { useState } from 'react';
 import {
   View,
@@ -9,23 +9,64 @@ import {
   KeyboardAvoidingView,
   Platform,
   ScrollView,
+  Alert,
+  ActivityIndicator,
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { palette, theme } from '../constants/Colors';
+import { useAuth } from '../contexts/AuthContext';
+import { isSupabaseConfigured } from '../lib/supabase';
 import Button from '../components/Button';
 
 export default function LoginScreen() {
   const router = useRouter();
   const insets = useSafeAreaInsets();
+  const { signIn, enterDemoMode } = useAuth();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
+  const [isSigningIn, setIsSigningIn] = useState(false);
 
-  const handleDemoElder = () => router.replace('/(elder)');
-  const handleDemoHelper = () => router.replace('/(helper)');
-  const handleDemoFamily = () => router.replace('/(family)');
+  const handleSignIn = async () => {
+    if (!email || !password) {
+      Alert.alert('Missing fields', 'Please enter both email and password.');
+      return;
+    }
+
+    if (!isSupabaseConfigured) {
+      Alert.alert(
+        'Not Connected',
+        'Supabase is not configured. Use demo mode to explore the app, or add your Supabase credentials to .env to enable real sign-in.'
+      );
+      return;
+    }
+
+    setIsSigningIn(true);
+    const { error } = await signIn(email, password);
+    setIsSigningIn(false);
+
+    if (error) {
+      Alert.alert('Sign In Failed', error);
+    } else {
+      // Auth state change will trigger navigation via AuthContext
+      router.replace('/');
+    }
+  };
+
+  const handleDemoElder = () => {
+    enterDemoMode('elder');
+    router.replace('/(elder)');
+  };
+  const handleDemoHelper = () => {
+    enterDemoMode('helper');
+    router.replace('/(helper)');
+  };
+  const handleDemoFamily = () => {
+    enterDemoMode('family');
+    router.replace('/(family)');
+  };
 
   return (
     <KeyboardAvoidingView
@@ -74,6 +115,7 @@ export default function LoginScreen() {
                 placeholderTextColor={palette.textTertiary}
                 keyboardType="email-address"
                 autoCapitalize="none"
+                editable={!isSigningIn}
               />
             </View>
           </View>
@@ -94,6 +136,7 @@ export default function LoginScreen() {
                 placeholder="Enter your password"
                 placeholderTextColor={palette.textTertiary}
                 secureTextEntry={!showPassword}
+                editable={!isSigningIn}
               />
               <TouchableOpacity
                 onPress={() => setShowPassword(!showPassword)}
@@ -111,7 +154,19 @@ export default function LoginScreen() {
             <Text style={styles.forgotText}>Forgot password?</Text>
           </TouchableOpacity>
 
-          <Button title="Sign In" onPress={() => {}} fullWidth size="lg" />
+          {isSigningIn ? (
+            <View style={styles.loadingButton}>
+              <ActivityIndicator color={palette.white} />
+            </View>
+          ) : (
+            <Button title="Sign In" onPress={handleSignIn} fullWidth size="lg" />
+          )}
+
+          {!isSupabaseConfigured && (
+            <Text style={styles.noBackendNote}>
+              No backend configured — use demo mode below
+            </Text>
+          )}
         </View>
 
         {/* Divider */}
@@ -157,7 +212,7 @@ export default function LoginScreen() {
         {/* Sign up */}
         <View style={styles.signUpRow}>
           <Text style={styles.signUpText}>New to Tend? </Text>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={() => router.push('/signup' as any)}>
             <Text style={styles.signUpLink}>Create Account</Text>
           </TouchableOpacity>
         </View>
@@ -246,6 +301,19 @@ const styles = StyleSheet.create({
     fontSize: 13,
     color: palette.primary,
     fontWeight: '600',
+  },
+  loadingButton: {
+    height: 52,
+    borderRadius: theme.borderRadius.lg,
+    backgroundColor: palette.primary,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  noBackendNote: {
+    textAlign: 'center',
+    fontSize: 12,
+    color: palette.textTertiary,
+    marginTop: 10,
   },
   divider: {
     flexDirection: 'row',

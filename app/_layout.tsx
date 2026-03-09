@@ -1,9 +1,10 @@
-// Tend — Root layout
+// Tend — Root layout with AuthProvider
 import { useFonts } from 'expo-font';
 import { Stack } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 import { useEffect } from 'react';
 import { StatusBar } from 'expo-status-bar';
+import { AuthProvider } from '../contexts/AuthContext';
 
 export { ErrorBoundary } from 'expo-router';
 
@@ -33,7 +34,7 @@ export default function RootLayout() {
   }
 
   return (
-    <>
+    <AuthProvider>
       <StatusBar style="dark" />
       <Stack
         screenOptions={{
@@ -49,10 +50,17 @@ export default function RootLayout() {
             headerShown: false,
           }}
         />
+        <Stack.Screen
+          name="signup"
+          options={{
+            presentation: 'modal',
+            headerShown: false,
+          }}
+        />
         <Stack.Screen name="(elder)" options={{ headerShown: false }} />
         <Stack.Screen name="(helper)" options={{ headerShown: false }} />
         <Stack.Screen name="(family)" options={{ headerShown: false }} />
       </Stack>
-    </>
+    </AuthProvider>
   );
 }
